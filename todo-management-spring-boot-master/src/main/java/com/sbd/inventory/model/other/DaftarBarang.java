@@ -7,7 +7,8 @@ public interface DaftarBarang {
 	Long getIdBarang();
 	String getNamaBarang();
 	String getMerk();
-	Long getJumlah();
+	Long getJumlahTotal();
+	Long getJumlahSisa();
 	String getKondisi();
     String getNamaRuangan();
     String getSumberDana();

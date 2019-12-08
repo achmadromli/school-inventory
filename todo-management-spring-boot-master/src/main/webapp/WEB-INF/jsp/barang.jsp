@@ -1,10 +1,17 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation.jspf"%>
 <div class="container">
+	<c:if test="${em != null}">
+		<div class="alert alert-danger alert-dismissable fade in">
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	        <strong>Error!</strong> ${em}
+	    </div>
+	</c:if>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 ">
 			<div class="panel panel-primary">
 				<div class="panel-heading">Tambah Barang</div>
+				
 				<div class="panel-body">
 					<form:form method="post" modelAttribute="barang">
 						<form:hidden path="idBarang"/>
@@ -19,13 +26,18 @@
 							<form:input path="merk" type="text" class="form-control" required="required"/>
 							<form:errors path="merk" cssClass="text-warning" />
 						</fieldset>
-						
+						<c:if test="${idBarang > 0}">
+					        <fieldset class="form-group">
+								<form:label path="jumlahSisa">Jumlah yang dipindah</form:label>
+								<form:input path="jumlahSisa" type="text" class="form-control" required="required"/>
+								<form:errors path="jumlahSisa" cssClass="text-warning" />
+							</fieldset>
+						</c:if>
 						<fieldset class="form-group">
-							<form:label path="jumlah">Jumlah</form:label>
-							<form:input path="jumlah" type="text" class="form-control" required="required"/>
-							<form:errors path="jumlah" cssClass="text-warning" />
+							<form:label path="jumlahTotal">Jumlah Total</form:label>
+							<form:input path="jumlahTotal" type="text" class="form-control" required="required"/>
+							<form:errors path="jumlahTotal" cssClass="text-warning" />
 						</fieldset>
-						
 						<fieldset class="form-group">
 							<form:label path="kondisi">Kondisi</form:label>
 							<form:select path="kondisi" type="text" class="form-control" items="${kondisi}"></form:select>
@@ -57,4 +69,3 @@
 		</div>
 	</div>
 </div>
-<%@ include file="common/footer.jspf"%>

@@ -20,9 +20,11 @@ public interface IBarangService {
 
 	Optional<Barang> getBarangById(Long idBarang);
 	
+	String getNamaBarangById(Long idBarang);
+	
 	void updateBarang(Barang barang);
 
-	void addBarang(String userName, String namaBarang, String merk, Long jumlah, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain);
+	void addBarang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain);
 
 	void deleteBarang(long idBarang);
 	

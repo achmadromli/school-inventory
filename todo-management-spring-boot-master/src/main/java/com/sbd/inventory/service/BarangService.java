@@ -22,6 +22,11 @@ public class BarangService implements IBarangService {
 	@Autowired
 	private BarangRepository barangRepository;
 	
+	@Override
+	public String getNamaBarangById(Long idBarang) {
+		return barangRepository.getNamaBarangById(idBarang);
+	}
+	
 	public List<DaftarBarang> getBarangByAll(EntityManager em, String namaBarang, String merk, String namaRuangan, String sumberDana) {
 		String sql = "";
 		
@@ -61,8 +66,8 @@ public class BarangService implements IBarangService {
 	}
 
 	@Override
-	public void addBarang(String userName, String namaBarang, String merk, Long jumlah, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
-		barangRepository.save(new Barang(userName, namaBarang, merk, jumlah, kondisi, idRuangan, idPerolehan, tanggalMaintain));
+	public void addBarang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
+		barangRepository.save(new Barang(userName, namaBarang, merk, jumlahTotal, jumlahSisa, kondisi, idRuangan, idPerolehan, tanggalMaintain));
 	}
 
 	@Override

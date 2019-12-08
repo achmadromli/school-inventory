@@ -18,6 +18,7 @@ public interface HistoryTrackingRepository extends JpaRepository<HistoryTracking
 			+ "ht.tanggal_history as tanggalHistory "
 			+ "from history_tracking ht "
 			+ "left join barang b on ht.id_barang = b.id_barang "
-			+ "left join ruangan r on ht.id_ruangan = r.id_ruangan ", nativeQuery = true)
+			+ "left join ruangan r on ht.id_ruangan = r.id_ruangan "
+			+ "order by ht.tanggal_history desc", nativeQuery = true)
 	List<HistoryBarang> getListHistory();
 }

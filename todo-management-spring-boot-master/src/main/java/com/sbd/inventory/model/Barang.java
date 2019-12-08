@@ -26,7 +26,9 @@ public class Barang {
 	
 	private String merk;
 	
-	private Long jumlah;
+	private Long jumlahTotal;
+	
+	private Long jumlahSisa;
 	
 	private String kondisi;
 	
@@ -40,12 +42,13 @@ public class Barang {
 		super();
 	}
 
-	public Barang(String userName, String namaBarang, String merk, Long jumlah, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
+	public Barang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
 		super();
 		this.userName = userName;
 		this.namaBarang = namaBarang;
 		this.merk = merk;
-		this.jumlah = jumlah;
+		this.jumlahTotal = jumlahTotal;
+		this.jumlahSisa = jumlahSisa;
 		this.kondisi = kondisi;
 		this.idRuangan = idRuangan;
 		this.idPerolehan = idPerolehan;
@@ -74,14 +77,6 @@ public class Barang {
 
 	public void setNamaBarang(String namaBarang) {
 		this.namaBarang = namaBarang;
-	}
-
-	public Long getJumlah() {
-		return jumlah;
-	}
-
-	public void setJumlah(Long jumlah) {
-		this.jumlah = jumlah;
 	}
 
 	public String getKondisi() {
@@ -122,6 +117,22 @@ public class Barang {
 
 	public void setIdPerolehan(Long idPerolehan) {
 		this.idPerolehan = idPerolehan;
+	}
+
+	public Long getJumlahTotal() {
+		return jumlahTotal;
+	}
+
+	public void setJumlahTotal(Long jumlahTotal) {
+		this.jumlahTotal = jumlahTotal;
+	}
+
+	public Long getJumlahSisa() {
+		return jumlahSisa;
+	}
+
+	public void setJumlahSisa(Long jumlahSisa) {
+		this.jumlahSisa = jumlahSisa;
 	}
 	
 }

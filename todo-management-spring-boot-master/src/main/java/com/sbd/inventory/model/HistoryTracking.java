@@ -28,14 +28,7 @@ public class HistoryTracking {
 
 	private Long jumlahPindah;
 	
-	public HistoryTracking(Long idRuangan, Long idBarang, String keterangan, Date tanggalHistory, Long jumlahPindah) {
-		super();
-		this.idRuangan = idRuangan;
-		this.idBarang = idBarang;
-		this.keterangan = keterangan;
-		this.tanggalHistory = tanggalHistory;
-		this.jumlahPindah = jumlahPindah;
-	}
+	private Long jumlahBarang;
 	
 	public Long getIdRuangan() {
 		return idRuangan;
@@ -83,6 +76,14 @@ public class HistoryTracking {
 
 	public void setJumlahPindah(Long jumlahPindah) {
 		this.jumlahPindah = jumlahPindah;
+	}
+
+	public Long getJumlahBarang() {
+		return jumlahBarang;
+	}
+
+	public void setJumlahBarang(Long jumlahBarang) {
+		this.jumlahBarang = jumlahBarang;
 	}
 	
 }
