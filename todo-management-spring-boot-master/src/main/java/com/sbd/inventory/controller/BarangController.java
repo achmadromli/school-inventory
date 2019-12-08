@@ -256,7 +256,6 @@ public class BarangController {
 	
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public ModelAndView reportDaftarBarang(ModelMap model, HttpServletRequest req, HttpServletResponse res) {
-		System.out.println("masuk");
 		String userName = getLoggedInUserName(model);
 		List<DaftarBarang> list = barangService.getBarangsByUser(userName);
 		return new ModelAndView(new PdfDaftarBarangReport(), "daftarBarang", list);

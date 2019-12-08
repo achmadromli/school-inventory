@@ -23,7 +23,6 @@ public class PdfDaftarBarangReport extends AbstractPdfView {
 		
 		@SuppressWarnings("unchecked")
 		List<DaftarBarang> list = (List<DaftarBarang>) model.get("daftarBarang");
-		System.out.println("masu");
 		Table table = new Table(9);
 		table.addCell("No.");
 		table.addCell("Nama Barang");
@@ -37,7 +36,6 @@ public class PdfDaftarBarangReport extends AbstractPdfView {
 		
 		int no = 1;
 		for (DaftarBarang daftarBarang : list) {
-			System.out.println("melbu");
 			table.addCell(String.valueOf(no));
 			table.addCell(daftarBarang.getNamaBarang());
 			table.addCell(daftarBarang.getMerk());
