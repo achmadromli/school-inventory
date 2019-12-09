@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.core.layout.HtmlLayout.FontSize;
-
 import com.sbd.inventory.view.AbstractPdfView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -22,6 +20,7 @@ import com.sbd.inventory.model.other.DaftarBarang;
 
 public class PdfDaftarBarangReport extends AbstractPdfView {
 
+	//format untuk pdf yang di download
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {

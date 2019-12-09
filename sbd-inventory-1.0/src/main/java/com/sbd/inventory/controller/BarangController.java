@@ -57,6 +57,7 @@ public class BarangController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
+	//untuk tampilahan awal di record barang
 	@RequestMapping(value = "/list-barangs", method = RequestMethod.GET)
 	public String showBarangs(ModelMap model) {
 		String name = getLoggedInUserName(model);
@@ -76,6 +77,7 @@ public class BarangController {
 		return principal.toString();
 	}
 
+	//untuk menampilkan menu-menu barang yang akan ditambahkan
 	@RequestMapping(value = "/add-barang", method = RequestMethod.GET)
 	public String showAddBarangPage(ModelMap model) {
 		Vector<String> kondisi = new Vector<>();
@@ -97,12 +99,14 @@ public class BarangController {
 		return "barang";
 	}
 
+	//untuk menghapus record barang yang ada
 	@RequestMapping(value = "/delete-barang", method = RequestMethod.GET)
 	public String deleteBarang(@RequestParam Long idBarang) {
 		barangService.deleteBarang(idBarang);
 		return "redirect:/list-barangs";
 	}
 
+	//untuk menampilkan data-data barang yang hendak dipindahkan
 	@RequestMapping(value = "/update-barang", method = RequestMethod.GET)
 	public String showUpdateBarangPage(@RequestParam Long idBarang, ModelMap model) {
 		Barang barang = barangService.getBarangById(idBarang).get();
@@ -127,15 +131,22 @@ public class BarangController {
 		return "barang";
 	}
 
+	//untuk pemindahan barang
 	@RequestMapping(value = "/update-barang", method = RequestMethod.POST)
 	public String updateBarang(ModelMap model, @RequestParam Long idBarang, HttpServletRequest request) {
-		//penanda untuk barang dipindah atau tidak
+		//penanda untuk barang dipindah atau tidak (dibagi menjadi dua jenis, dipindah semua atau sebagian)
 		boolean pindah = false;
 		boolean pindahSemua = false;
+		
 		Barang barangClone = new Barang();
 		Barang barangAwal = barangService.getBarangById(idBarang).get();
+		
+		//check apakah sudah pilih ruangan baru
+		//jika tidak pilih ruangan baru, maka akan muncul pesan error bahwa pesan belum dipilih
 		if (barangAwal.getIdRuangan()!=Long.parseLong(request.getParameter("idRuangan"))) {
-			System.out.println("masuk disini");
+			
+			//cek apakah jumlah yang dipindahkan barang yang ada
+			//kalau lebih akan diberi pesan jumlah barang yang akan dipindah melebihi barang yang ada
 			if (barangAwal.getJumlahSisa()-Long.parseLong(request.getParameter("jumlahSisa"))>0) {
 				pindah = true;
 	        } else if (barangAwal.getJumlahSisa()-Long.parseLong(request.getParameter("jumlahSisa"))==0) {
@@ -161,7 +172,7 @@ public class BarangController {
 	    		
 	    		model.put("barang", barang);
 	    		
-	        	model.addAttribute("em", "Jumlah Minus");
+	        	model.addAttribute("em", "Barang yang akan dipindah melebihi barang yang ada");
 	        	return "barang";
 	        }
 		} else {
@@ -187,6 +198,8 @@ public class BarangController {
 			model.addAttribute("em", "Ruangan belum dipilih untuk memindahkan barang!");
 			return "barang";
 		}
+		
+		//jika hendak pindahkan barang dari ruangan a ke ruangan b
 		if (pindahSemua) {
 			barangAwal.setIdRuangan(Long.parseLong(request.getParameter("idRuangan")));
 			barangService.updateBarang(barangAwal);
@@ -207,6 +220,7 @@ public class BarangController {
 			
 		}
 		
+		//pencatatan history pemindahan barang
         if (pindah) {
 	        HistoryTracking historyTracking = new HistoryTracking();
 	        
@@ -233,6 +247,7 @@ public class BarangController {
         return "redirect:/list-barangs";
 	}
 
+	//penambahan barang baru
 	@RequestMapping(value = "/add-barang", method = RequestMethod.POST)
 	public String addBarang(ModelMap model, @Valid Barang barang, BindingResult result, HttpServletRequest request) {
 		
@@ -255,6 +270,7 @@ public class BarangController {
 		return "redirect:/list-barangs";
 	}
 	
+	//untuk download record barang yang ada
 	@RequestMapping(path = "/download", method = RequestMethod.GET)
 	public ModelAndView reportDaftarBarang(ModelMap model) {
 		String userName = getLoggedInUserName(model);

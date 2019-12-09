@@ -14,6 +14,7 @@ public class HistoryTrackingController {
 	@Autowired
 	private HistoryTrackingRepository historyTrackingRepository;
 	
+	//untuk menampilkan record history barang
 	@RequestMapping(value = "/historyBarang", method = RequestMethod.GET)
 	public String showHistoryBarang(ModelMap model) {
 		

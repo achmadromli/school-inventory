@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("error")
 public class ErrorController {
 	
+	//jika ada error pada program
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException (HttpServletRequest request, Exception ex) {
 		ModelAndView mv = new ModelAndView();
