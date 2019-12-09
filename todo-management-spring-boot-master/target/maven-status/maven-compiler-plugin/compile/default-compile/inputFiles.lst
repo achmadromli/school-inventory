@@ -18,4 +18,5 @@ C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\c
 C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\com\sbd\inventory\view\PdfDaftarBarangReport.java
 C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\com\sbd\inventory\repository\HistoryTrackingRepository.java
 C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\com\sbd\inventory\controller\LogoutController.java
+C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\com\sbd\inventory\view\AbstractPdfView.java
 C:\Users\LENOVO\git\tugas-sbd\todo-management-spring-boot-master\src\main\java\com\sbd\inventory\security\SecurityConfiguration.java

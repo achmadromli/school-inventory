@@ -6,11 +6,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.view.document.AbstractPdfView;
+import org.apache.logging.log4j.core.layout.HtmlLayout.FontSize;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Table;
-import com.lowagie.text.pdf.PdfWriter;
+import com.sbd.inventory.view.AbstractPdfView;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.sbd.inventory.model.other.DaftarBarang;
 
 public class PdfDaftarBarangReport extends AbstractPdfView {
@@ -23,28 +30,123 @@ public class PdfDaftarBarangReport extends AbstractPdfView {
 		
 		@SuppressWarnings("unchecked")
 		List<DaftarBarang> list = (List<DaftarBarang>) model.get("daftarBarang");
-		Table table = new Table(9);
-		table.addCell("No.");
-		table.addCell("Nama Barang");
-		table.addCell("Merk");
-		table.addCell("Jumlah Total");
-		table.addCell("Jumlah Sisa");
-		table.addCell("Kondisi");
-		table.addCell("Ruangan");
-		table.addCell("Sumber Dana");
-		table.addCell("Tanggal Maintain");
 		
-		int no = 1;
+		PdfPTable table = new PdfPTable(9);
+		table.setWidthPercentage(100);
+		table.setWidths(new int[] {5, 15, 15, 15, 15, 15, 15, 15, 15});
+		
+		Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		headFont.setSize(11);
+		
+		PdfPCell hcell;
+		hcell = new PdfPCell(new Phrase("No.", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Nama Barang", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Merk", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Jumlah Total", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Jumlah Sisa", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Kondisi", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Ruangan", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Sumber Dana", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		hcell = new PdfPCell(new Phrase("Tanggal Maintain", headFont));
+		hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		hcell.setBackgroundColor(BaseColor.GRAY);
+		table.addCell(hcell);
+		
+		Font cellFont = FontFactory.getFont(FontFactory.TIMES_ROMAN);
+		cellFont.setSize(11);
+		
+		Long no = new Long(1);
+		
 		for (DaftarBarang daftarBarang : list) {
-			table.addCell(String.valueOf(no));
-			table.addCell(daftarBarang.getNamaBarang());
-			table.addCell(daftarBarang.getMerk());
-			table.addCell(String.valueOf(daftarBarang.getJumlahTotal()));
-			table.addCell(String.valueOf(daftarBarang.getJumlahSisa()));
-			table.addCell(daftarBarang.getKondisi());
-			table.addCell(daftarBarang.getNamaRuangan());
-			table.addCell(daftarBarang.getSumberDana());
-			table.addCell(String.valueOf(daftarBarang.getTanggalMaintain()));
+			
+			PdfPCell cell;
+			
+            cell = new PdfPCell(new Phrase(no.toString()));
+            cell.setPaddingLeft(5);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+			
+            cell = new PdfPCell(new Phrase(daftarBarang.getNamaBarang()));
+            cell.setPaddingLeft(5);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase(daftarBarang.getMerk()));
+            cell.setPaddingLeft(5);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getJumlahTotal().toString()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getJumlahSisa().toString()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getKondisi()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getNamaRuangan()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getSumberDana()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(daftarBarang.getTanggalMaintain().toString()));
+	        cell.setPaddingLeft(5);
+	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+			
 			no++;
 		}
 		document.add(table);

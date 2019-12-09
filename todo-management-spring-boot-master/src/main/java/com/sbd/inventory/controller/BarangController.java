@@ -2,12 +2,13 @@ package com.sbd.inventory.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -254,11 +255,17 @@ public class BarangController {
 		return "redirect:/list-barangs";
 	}
 	
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public ModelAndView reportDaftarBarang(ModelMap model, HttpServletRequest req, HttpServletResponse res) {
+	@RequestMapping(path = "/download", method = RequestMethod.GET)
+	public ModelAndView reportDaftarBarang(ModelMap model) {
 		String userName = getLoggedInUserName(model);
+		
 		List<DaftarBarang> list = barangService.getBarangsByUser(userName);
-		return new ModelAndView(new PdfDaftarBarangReport(), "daftarBarang", list);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("daftarBarang", list);
+		
+		return new ModelAndView(new PdfDaftarBarangReport(), map);
 	}
 	
 }
