@@ -38,10 +38,17 @@
 							<form:input path="jumlahTotal" type="text" class="form-control" required="required"/>
 							<form:errors path="jumlahTotal" cssClass="text-warning" />
 						</fieldset>
+						
 						<fieldset class="form-group">
 							<form:label path="kondisi">Kondisi</form:label>
 							<form:select path="kondisi" type="text" class="form-control" items="${kondisi}"></form:select>
 							<form:errors path="kondisi" cssClass="text-warning" />
+						</fieldset>
+						
+						<fieldset class="form-group">
+							<form:label path="statusBarang">Status Barang</form:label>
+							<form:select path="statusBarang" type="text" class="form-control" items="${statusBarangs}"></form:select>
+							<form:errors path="statusBarang" cssClass="text-warning" />
 						</fieldset>
 						
 						<fieldset class="form-group">
@@ -69,3 +76,4 @@
 		</div>
 	</div>
 </div>
+<%@ include file="common/footer.jspf"%>

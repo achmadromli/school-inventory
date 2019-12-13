@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.sbd.inventory.model.Barang;
 import com.sbd.inventory.model.other.DaftarBarang;
+import com.sbd.inventory.model.other.StatusBarang;
 import com.sbd.inventory.repository.BarangRepository;
-import com.sbd.inventory.specification.DaftarBarangSpecification;
 
 @Service
 public class BarangService implements IBarangService {
@@ -27,28 +28,36 @@ public class BarangService implements IBarangService {
 		return barangRepository.getNamaBarangById(idBarang);
 	}
 	
-	public List<DaftarBarang> getBarangByAll(EntityManager em, String namaBarang, String merk, String namaRuangan, String sumberDana) {
-		String sql = "";
+	public List<DaftarBarang> getBarangByAll(String merk, String namaBarang, String namaRuangan, String sumberDana) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.sbd.inventory.model.other");
+		EntityManager em = entityManagerFactory.createEntityManager();
 		
+		String sql = "";
+				
 		if (namaBarang!=null && namaBarang.length()>0) sql = sql + "and b.nama_barang ilike :namaBarang ";
 		if (merk!=null && merk.length()>0) sql = sql + "and b.merk ilike :merk ";
 		if (namaRuangan!=null && namaRuangan.length()>0) sql = sql + "r.nama_ruangan ilike :namaRuangan ";
 		if (sumberDana!=null && sumberDana.length()>0) sql = sql + "pb.sumber_dana ilike :sumberDana ";
 		
 		String sqll = "select "
+				+ "b.id_barang as idBarang, "
+				+ "b.nama_barang as namaBarang, "
+				+ "b.merk as merk, "
+				+ "b.jumlah_sisa as jumlahSisa, "
+				+ "b.jumlah_total as jumlahTotal, "
+				+ "b.kondisi as kondisi, "
+				+ "r.nama_ruangan as namaRuangan, "
+				+ "pb.sumber_dana as sumberDana, "
+				+ "b.tanggal_maintain as tanggalMaintain "
 				+ "from barang b "
 				+ "left join ruangan r on b.id_ruangan = r.id_ruangan "
 				+ "left join perolehan_barang pb on b.id_perolehan = pb.id_perolehan "
 				+ "where 1=1 " + sql;
 		
-	    TypedQuery<DaftarBarang> query = em.createQuery(sqll, DaftarBarang.class);
-	    return query.getResultList();
+		TypedQuery<DaftarBarang> query = em.createQuery(sqll, DaftarBarang.class);
+		
+		return query.getResultList();
 	} 
-	
-	@Override
-	public List<DaftarBarang> findDaftarBarangSpecific(String merk, String namaBarang, String ruangan, String perolehan) {
-		return barangRepository.findAll(Specification.where(DaftarBarangSpecification.merkLike(merk)).and(DaftarBarangSpecification.namaBarangLike(namaBarang)).and(DaftarBarangSpecification.ruanganLike(ruangan)).and(DaftarBarangSpecification.perolehanLike(perolehan)));
-	}
 	
 	@Override
 	public List<DaftarBarang> getBarangsByUser(String user) {
@@ -66,8 +75,8 @@ public class BarangService implements IBarangService {
 	}
 
 	@Override
-	public void addBarang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
-		barangRepository.save(new Barang(userName, namaBarang, merk, jumlahTotal, jumlahSisa, kondisi, idRuangan, idPerolehan, tanggalMaintain));
+	public void addBarang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain, StatusBarang statusBarang) {
+		barangRepository.save(new Barang(userName, namaBarang, merk, jumlahTotal, jumlahSisa, kondisi, idRuangan, idPerolehan, tanggalMaintain, statusBarang));
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.sbd.inventory.model.HistoryTracking;
 import com.sbd.inventory.model.other.HistoryBarang;
 
-public interface HistoryTrackingRepository extends JpaRepository<HistoryTracking, Long>{
+public interface HistoryTrackingRepository extends JpaRepository<HistoryTracking, Long> {
 
 	@Query(value = "select "
 			+ "b.nama_barang as namaBarang, "

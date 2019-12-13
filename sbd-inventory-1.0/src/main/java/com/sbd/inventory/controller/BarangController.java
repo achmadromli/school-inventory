@@ -29,6 +29,7 @@ import com.sbd.inventory.model.HistoryTracking;
 import com.sbd.inventory.model.PerolehanBarang;
 import com.sbd.inventory.model.Ruangan;
 import com.sbd.inventory.model.other.DaftarBarang;
+import com.sbd.inventory.model.other.StatusBarang;
 import com.sbd.inventory.repository.HistoryTrackingRepository;
 import com.sbd.inventory.repository.PerolehanBarangRepository;
 import com.sbd.inventory.repository.RuanganRepository;
@@ -67,6 +68,13 @@ public class BarangController {
 		return "list-barangs";
 	}
 
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String searchBarang(ModelMap model, HttpServletRequest request) {
+		List<DaftarBarang> list = barangService.getBarangByAll(request.getParameter("merkX"), request.getParameter("namaBarangX"), request.getParameter("ruanganX"), request.getParameter("perolehanX"));
+		model.put("daftarBarang", list);
+		return "list-barangs";
+	}
+	
 	private String getLoggedInUserName(ModelMap model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -88,6 +96,15 @@ public class BarangController {
 			kondisi.add("Baru");
 		}
 		model.put("kondisi", kondisi);
+		
+		Vector<String> statusBarangs = new Vector<>();
+		if (statusBarangs.size()==0) {
+			StatusBarang[] status = StatusBarang.values();
+			for (int i=0; i<status.length; i++) {
+				statusBarangs.add(status[i].name());
+			}
+		}
+		model.put("statusBarangs", statusBarangs);
 		
 		List<Ruangan> ruangan = ruanganRepository.findAll();
 		model.put("ruangan", ruangan);
@@ -120,6 +137,15 @@ public class BarangController {
 			kondisi.add("Baru");
 		}
 		model.put("kondisi", kondisi);
+		
+		Vector<String> statusBarangs = new Vector<>();
+		if (statusBarangs.size()==0) {
+			StatusBarang[] status = StatusBarang.values();
+			for (int i=0; i<status.length; i++) {
+				statusBarangs.add(status[i].name());
+			}
+		}
+		model.put("statusBarangs", statusBarangs);
 		
 		List<Ruangan> ruangan = ruanganRepository.findAll();
 		model.put("ruangan", ruangan);
@@ -250,7 +276,6 @@ public class BarangController {
 	//penambahan barang baru
 	@RequestMapping(value = "/add-barang", method = RequestMethod.POST)
 	public String addBarang(ModelMap model, @Valid Barang barang, BindingResult result, HttpServletRequest request) {
-		
 		if (result.hasErrors()) {
 			return "barang";
 		}
@@ -274,13 +299,9 @@ public class BarangController {
 	@RequestMapping(path = "/download", method = RequestMethod.GET)
 	public ModelAndView reportDaftarBarang(ModelMap model) {
 		String userName = getLoggedInUserName(model);
-		
 		List<DaftarBarang> list = barangService.getBarangsByUser(userName);
-		
 		Map<String, Object> map = new HashMap<>();
-		
 		map.put("daftarBarang", list);
-		
 		return new ModelAndView(new PdfDaftarBarangReport(), map);
 	}
 	

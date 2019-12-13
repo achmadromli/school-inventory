@@ -11,6 +11,7 @@ public interface DaftarBarang {
 	Long getJumlahTotal();
 	Long getJumlahSisa();
 	String getKondisi();
+	String getStatusBarang();
     String getNamaRuangan();
     String getSumberDana();
     Date getTanggalMaintain();

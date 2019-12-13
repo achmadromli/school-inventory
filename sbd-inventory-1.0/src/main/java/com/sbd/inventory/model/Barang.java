@@ -3,12 +3,16 @@ package com.sbd.inventory.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import com.sbd.inventory.model.other.StatusBarang;
 
 @Entity
 @Table(name="barang")
@@ -21,7 +25,7 @@ public class Barang {
 
 	private String userName;
 	
-	@Size(min = 2, message = "Enter at least 10 Characters...")
+	@Size(min = 2, message = "Enter at least 2 Characters...")
 	private String namaBarang;
 	
 	private String merk;
@@ -38,11 +42,14 @@ public class Barang {
 	
 	private Long idPerolehan;
 	
+	@Enumerated(EnumType.STRING)
+	private StatusBarang statusBarang;
+	
 	public Barang() {
 		super();
 	}
 
-	public Barang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain) {
+	public Barang(String userName, String namaBarang, String merk, Long jumlahTotal, Long jumlahSisa, String kondisi, Long idRuangan, Long idPerolehan, Date tanggalMaintain, StatusBarang statusBarang) {
 		super();
 		this.userName = userName;
 		this.namaBarang = namaBarang;
@@ -50,6 +57,7 @@ public class Barang {
 		this.jumlahTotal = jumlahTotal;
 		this.jumlahSisa = jumlahSisa;
 		this.kondisi = kondisi;
+		this.statusBarang = statusBarang;
 		this.idRuangan = idRuangan;
 		this.idPerolehan = idPerolehan;
 		this.tanggalMaintain = tanggalMaintain;
@@ -133,6 +141,14 @@ public class Barang {
 
 	public void setJumlahSisa(Long jumlahSisa) {
 		this.jumlahSisa = jumlahSisa;
+	}
+
+	public StatusBarang getStatusBarang() {
+		return statusBarang;
+	}
+
+	public void setStatusBarang(StatusBarang statusBarang) {
+		this.statusBarang = statusBarang;
 	}
 	
 }
